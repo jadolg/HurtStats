@@ -1,0 +1,36 @@
+{% extends "Base.html" %}
+
+{% block body %}
+    <div class="modal-header col-md-12">
+    <div class="col-md-9"><h4 class="modal-title">
+            <i class="fa fa-star"></i> Estadísticas HurtWorld CS Miraflores </h4></div>
+        <div class="col-md-3"><h4>Usuarios: {{ data | length }}</h4></div>
+        <div class="col-md-9"></div>
+        <div class="col-md-3"><h6>*Nota: Algunos caracteres extraños han sido removidos de los nombres</h6></div>
+    </div>
+
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Clan</th>
+                <th>Kills</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for usuario in data %}
+                <tr>
+                    <td><i class="fa fa-user"/>  {{ usuario.nombre }}</td>
+                    <td>{{ usuario.clan }}</td>
+                    <td>{{ usuario.kills }}</td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+
+{% endblock %}
