@@ -2,21 +2,22 @@
 
 {% block body %}
     <div class="modal-header col-md-12">
-    <div class="col-md-9"><h4 class="modal-title">
-            <i class="fa fa-star"></i> Estadísticas HurtWorld CS Miraflores </h4></div>
+    <div class="col-md-9"><h3 class="modal-title">
+            <i class="fa fa-star"></i> Estadísticas HurtWorld CS Miraflores </h3></div>
         <div class="col-md-3"><h4>Usuarios: {{ data | length }}</h4></div>
         <div class="col-md-9"></div>
         <div class="col-md-3"><h6>*Nota: Algunos caracteres extraños han sido removidos de los nombres</h6></div>
     </div>
 
     <div class="col-md-1"></div>
-    <div class="col-md-10">
+    <div class="col-md-5">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Usuario</th>
                 <th>Clan</th>
                 <th>Kills</th>
+                <th>$</th>
             </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                     <td><i class="fa fa-user"/>  {{ usuario.nombre }}</td>
                     <td>{{ usuario.clan }}</td>
                     <td>{{ usuario.kills }}</td>
+                    <td>{{ usuario.money }}</td>
                 </tr>
 
             {% endfor %}
@@ -32,5 +34,19 @@
         </table>
     </div>
     <div class="col-md-1"></div>
+    <div class="col-md-5">
+    <div class="col-md-12"><h3>Estadísticas por clanes</h3></div>
+    {% for clan in clans %}
+        <div class="col-md-3" style="background-color: #a94442; width: 150px; height: auto; margin-top: 10px; color: snow; margin-right: 10px">
+            <div class="col-md-12"><h4><i class="fa fa-flag" style="color: {{ clan.color }};"></i> {{ clan.nombre }}</h4></div>
+            <div class="col-md-12"><h5>Miembros: {{ clan.miembros }}</h5></div>
+            <div class="col-md-12"><h5>Kills: {{ clan.kills }}</h5></div>
+        </div>
+    {% endfor %}
+
+    </div>
+
+
+
 
 {% endblock %}

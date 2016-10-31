@@ -21,6 +21,7 @@ def get_data():
     usuarios = json.loads(open(DATA_FOLDER+'/PlayerDatabase.json',"r").read())
     kills = json.loads(open(DATA_FOLDER+'/KillCounter.json',"r").read())
     clans = json.loads(open(DATA_FOLDER+'/ClansData.json',"r").read())
+    banks = json.loads(open(DATA_FOLDER+'/Banks.json',"r").read())
     respuesta = []
 
     for id in usuarios.get('knownPlayers'):
@@ -57,14 +58,48 @@ def get_data():
             except:
                 pass
 
+        money = 0
+
+        try:
+            money = float(banks.get('List_accounts').get(id).get('current')) + float(banks.get('List_accounts').get(id).get('poket'))
+        except:
+            pass
+
         usuario = {
             'id' : id,
             'nombre': nombre,
             'clan': tclan,
-            'kills': ukill
+            'kills': ukill,
+            'money': money
         }
         respuesta.append(usuario)
 
 
 
-    return sorted(respuesta,key=lambda dict: (dict['kills']),reverse=True)
+    return sorted(respuesta,key=lambda dict: (dict['kills'],dict['money']),reverse=True)
+
+
+def get_clans(data):
+    result = []
+    clans = json.loads(open(DATA_FOLDER + '/ClansData.json', "r").read())
+    for clan in clans:
+        kills = 0
+        member_sum = len(clan.get('members'))
+        for member in clan.get('members'):
+            for m in data:
+                if int(m['id']) == member.get('id').get('m_SteamID'):
+                    kills += m['kills']
+                    break
+
+        theclan = {
+            'nombre' : clan.get('clanTag'),
+            'miembros' : member_sum,
+            'color' : clan.get('clanTagColor'),
+            'kills' : kills
+        }
+
+        result.append(theclan)
+
+    return sorted(result, key=lambda dict: (dict['kills']), reverse=True)
+
+

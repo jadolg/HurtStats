@@ -129,4 +129,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "templates/assets/"),
 ]
 
-DATA_FOLDER = "/home/akiel/Desktop/HurtFiles/data"
+# DATA_FOLDER = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/data"
+DATA_FOLDER = "C:/Users/Server/Desktop/Server/oxide/data"

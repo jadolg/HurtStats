@@ -1,8 +1,10 @@
 from django.shortcuts import render
 
 # Create your views here.
-from HurtStats.data_provider import get_data
+from HurtStats.data_provider import get_data, get_clans
 
 
 def index(request):
-    return render(request,"index.html", {"data":get_data()})
+    data = get_data()
+    clans = get_clans(data)
+    return render(request,"index.html", {"data":data, "clans":clans})
