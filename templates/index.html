@@ -3,7 +3,8 @@
 {% block body %}
     <div class="modal-header col-md-12">
         <div class="col-md-9" style="margin-top: 20px"><h2 class="modal-title">
-            <i class="fa fa-star"></i> Estadísticas HurtWorld CS Miraflores </h2>
+{#            <i class="fa fa-star"></i>#}
+            <img src="/static/img/icon.png">  Estadísticas HurtWorld CS Miraflores </h2>
         </div>
         <div class="col-md-3">
             <h4>Usuarios: {{ data | length }}</h4>
@@ -28,18 +29,18 @@
 					<table class="table table-hover" id="dev-table">
 						<thead>
 							<tr>
-								<th>#</th>
-								<th>Usuario</th>
-                                <th>Clan</th>
-                                <th>Kills</th>
-                                <th>$</th>
+								<th style="font-size: 20px;">#</th>
+								<th style="font-size: 20px;">Usuario</th>
+                                <th style="font-size: 20px;">Clan</th>
+                                <th style="font-size: 25px;">☠</th>
+                                <th style="font-size: 20px;">$</th>
 							</tr>
 						</thead>
 						<tbody>
                         {% for usuario in data %}
 							<tr>
 								<td>{{ forloop.counter }}</td>
-                                <td><i class="fa fa-user"/>  {{ usuario.nombre }}</td>
+                                <td><img src="/static/img/lr_icon.png"> {{ usuario.nombre }}</td>
 								<td>{{ usuario.clan }}</td>
                                 <td>{{ usuario.kills }}</td>
                                 <td>{{ usuario.money }}</td>
