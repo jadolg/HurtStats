@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-3">
             <h4>Usuarios: {{ data | length }}</h4>
-            <h6>*Nota: Algunos caracteres extraños han sido removidos de los nombres</h6>
+            <h6>*Nota: Algunos caracteres extraños han sido removidos de los nombres. Los usuarios marcados en <span style="color: white; background-color: #ba2121">rojo</span> están baneados y los que aparecen en <span style="background-color: #5bc0de; color: white">azul</span> tienen un ID incorrecto</h6>
             <h6>Desarrollado por: <a href="https://192.168.32.4/user/guamulo">@Guamulo</a></h6>
         </div>
     </div>
@@ -38,13 +38,19 @@
 						</thead>
 						<tbody>
                         {% for usuario in data %}
-							<tr>
-								<td>{{ forloop.counter }}</td>
-                                <td><img src="/static/img/lr_icon.png"> {{ usuario.nombre }}</td>
-								<td>{{ usuario.clan }}</td>
-                                <td>{{ usuario.kills }}</td>
-                                <td>{{ usuario.money }}</td>
-							</tr>
+                            {% if  usuario.banned  %}
+							    <tr style="background-color: #ba2121" >
+                            {% elif usuario.dirty %}
+                                    <tr style="background-color: #5bc0de">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><img src="/static/img/lr_icon.png"> {{ usuario.nombre }}</td>
+                                    <td>{{ usuario.clan }}</td>
+                                    <td>{{ usuario.kills }}</td>
+                                    <td>{{ usuario.money }}</td>
+                                </tr>
                         {% endfor %}
 						</tbody>
 					</table>

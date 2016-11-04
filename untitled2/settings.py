@@ -131,3 +131,6 @@ STATICFILES_DIRS = [
 
 DATA_FOLDER = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/data"
 # DATA_FOLDER = "C:/Users/Server/Desktop/Server/oxide/data"
+
+BANLIST = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/banlist.txt"
+# BANLIST = "C:/Users/Server/Desktop/Server/banlist.txt"

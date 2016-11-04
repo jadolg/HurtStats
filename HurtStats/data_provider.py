@@ -2,8 +2,7 @@ import json
 import re
 from string import printable
 
-from untitled2.settings import DATA_FOLDER
-
+from untitled2.settings import DATA_FOLDER, BANLIST
 
 
 def remove_non_ascii_2(text):
@@ -22,6 +21,7 @@ def get_data():
     kills = json.loads(open(DATA_FOLDER+'/KillCounter.json',"r").read())
     clans = json.loads(open(DATA_FOLDER+'/ClansData.json',"r").read())
     banks = json.loads(open(DATA_FOLDER+'/Banks.json',"r").read())
+    banned_list = open(BANLIST,'r').read().split('\r\n')
     respuesta = []
 
     for id in usuarios.get('knownPlayers'):
@@ -34,10 +34,18 @@ def get_data():
 
         nombre = 'Undefined'
         tclan = ''
+        dirty = False
+
+        banned = id in banned_list
 
         try:
             user = json.loads(open(DATA_FOLDER + '/playerdatabase/'+str(id)+'.json', "r").read())
-            nombre = user.get('default').get('name')
+            nombre = user.get('name').strip('"')
+            ip = user.get('ip').strip('"')
+            steamid = user.get('steamid').strip('"')
+
+            if not str(steamid).startswith(ip.replace('.','')):
+                dirty = True
         except:
             pass
 
@@ -49,6 +57,7 @@ def get_data():
                     tclan = clan.get('clanTag')
                     if nombre == 'Undefined':
                         nombre = member.get('name')
+                        dirty = True
                     break
 
 
@@ -70,7 +79,9 @@ def get_data():
             'nombre': nombre,
             'clan': tclan,
             'kills': ukill,
-            'money': money
+            'money': money,
+            'dirty': dirty,
+            'banned':banned
         }
         respuesta.append(usuario)
 
