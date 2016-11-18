@@ -13,6 +13,16 @@
 
 </head>
 <body>
+    <div class="modal-header col-md-12">
+        <div class="col-md-9" style="margin-top: 20px"><h2 class="modal-title">
+            <img src="/static/img/icon.png">  Estadísticas HurtWorld Comunidad Sur </h2>
+        </div>
+        <div class="col-md-3">
+            <h4>Usuarios: {{ data | length }}</h4>
+            <h6>*Nota: Algunos caracteres extraños han sido removidos de los nombres. Los usuarios marcados en <span style="background-color: #5bc0de; color: white">azul</span> tienen un ID incorrecto</h6>
+            <h6>Desarrollado por: <a href="https://192.168.32.4/user/guamulo">@Guamulo</a></h6>
+        </div>
+    </div>
 {% block body %}
 
 {% endblock %}

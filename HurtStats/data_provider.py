@@ -16,15 +16,26 @@ def remove_non_printable(text):
 
 
 def get_data():
-    data = open(DATA_FOLDER+'/oxide.covalence.data',"r").read()
+    # data = open(DATA_FOLDER+'/oxide.covalence.data',"r").read()
     usuarios = json.loads(open(DATA_FOLDER+'/PlayerDatabase.json',"r").read())
     kills = json.loads(open(DATA_FOLDER+'/KillCounter.json',"r").read())
     clans = json.loads(open(DATA_FOLDER+'/ClansData.json',"r").read())
     banks = json.loads(open(DATA_FOLDER+'/Banks.json',"r").read())
-    banned_list = open(BANLIST,'r').read().split('\r\n')
+    banned_list = []
+    ips = []
+    dups = []
+
+    for ban_id in open(BANLIST, 'r').readlines():
+        banned_list.append(ban_id.strip('\n').strip('\r'))
+
     respuesta = []
 
     for id in usuarios.get('knownPlayers'):
+        banned = str(id) in banned_list
+
+        if banned:
+            continue
+
         mregex = id+"\D\W*(.+)"
 
         if kills.get(id) != None:
@@ -36,12 +47,18 @@ def get_data():
         tclan = ''
         dirty = False
 
-        banned = id in banned_list
+
 
         try:
             user = json.loads(open(DATA_FOLDER + '/playerdatabase/'+str(id)+'.json', "r").read())
             nombre = user.get('name').strip('"')
             ip = user.get('ip').strip('"')
+
+            if not ip in ips:
+                ips.append(ip)
+            else:
+                dups.append(ip)
+
             steamid = user.get('steamid').strip('"')
 
             if not str(steamid).startswith(ip.replace('.','')):
@@ -61,11 +78,11 @@ def get_data():
                     break
 
 
-        if nombre == 'Undefined':
-            try:
-                nombre = remove_initial_numbers(remove_non_printable(remove_non_ascii_2(re.search(mregex,data).group(1)))).replace("\n","")
-            except:
-                pass
+        # if nombre == 'Undefined':
+        #     try:
+        #         nombre = remove_initial_numbers(remove_non_printable(remove_non_ascii_2(re.search(mregex,data).group(1)))).replace("\n","")
+        #     except:
+        #         pass
 
         money = 0
 
@@ -76,16 +93,20 @@ def get_data():
 
         usuario = {
             'id' : id,
+            'ip' : ip,
             'nombre': nombre,
             'clan': tclan,
             'kills': ukill,
             'money': money,
             'dirty': dirty,
-            'banned':banned
+            'banned':banned,
+            'duplicated_ip' : 0
         }
         respuesta.append(usuario)
 
-
+    for i in respuesta:
+        if i['ip'] in dups:
+            i['duplicated_ip'] = True
 
     return sorted(respuesta,key=lambda dict: (dict['kills'],dict['money']),reverse=True)
 

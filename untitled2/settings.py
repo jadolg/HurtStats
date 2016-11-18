@@ -129,8 +129,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "templates/assets/"),
 ]
 
-DATA_FOLDER = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/data"
-# DATA_FOLDER = "C:/Users/Server/Desktop/Server/oxide/data"
 
-BANLIST = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/banlist.txt"
-# BANLIST = "C:/Users/Server/Desktop/Server/banlist.txt"
+DEVEL = True
+
+if DEVEL:
+    DATA_FOLDER = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/data"
+    BANLIST = "/home/akiel/PycharmProjects/HurtStats/HurtFiles/banlist.txt"
+    ADMIN_IPS = ['127.0.0.1', ]
+else:
+    DATA_FOLDER = "C:/Users/Server/Desktop/Server/oxide/data"
+    BANLIST = "C:/Users/Server/Desktop/Server/banlist.txt"
+    ADMIN_IPS = ['127.0.0.1','10.24.18.143','10.24.17.11','10.24.18.11',]
